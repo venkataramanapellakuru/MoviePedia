@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Pedia</title>
+  <style>
+    /* CSS styles */
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #1e3c72, #2a5298);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      transition: all 0.3s ease;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #222;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: background-color 0.3s;
+    }
+
+    .header:hover {
+      background-color: #333;
+    }
+
+    .logo {
+      font-size: 2em;
+      font-weight: bold;
+    }
+
+    .nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+      font-weight: bold;
+    }
+
+    .nav a:hover {
+      color: #18bc9c;
+    }
+
+    .search-bar {
+      text-align: center;
+      padding: 20px;
+      background-color: #2c3e50;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-bar input {
+      padding: 10px;
+      width: 300px;
+      border-radius: 5px;
+      border: 1px solid #bdc3c7;
+      margin-right: 10px;
+      transition: box-shadow 0.3s;
+    }
+
+    .search-bar input:focus {
+      box-shadow: 0 0 5px #18bc9c;
+      outline: none;
+    }
+
+    .search-bar button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #18bc9c;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .search-bar button:hover {
+      background-color: #2ecc71;
+    }
+
+    .main-content {
+      padding: 20px;
+    }
+
+    .movie-poster {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .movie {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 200px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      animation: fadeIn 1s;
+    }
+
+    .movie:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .movie img {
+      width: 100%;
+      height: auto;
+      transition: transform 0.3s;
+    }
+
+    .movie:hover img {
+      transform: scale(1.1);
+    }
+
+    .movie-info {
+      padding: 10px;
+      text-align: center;
+    }
+
+    .movie-info h3 {
+      margin: 0;
+      font-size: 1.2em;
+      color: #2c3e50;
+    }
+
+    .section {
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1.5s;
+    }
+
+    .section h2 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+      border-bottom: 2px solid #18bc9c;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    .section p {
+      margin: 10px 0;
+      line-height: 1.6;
+    }
+
+    .movie-details {
+      padding: 20px;
+      background: #ecf0f1;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin: 20px 0;
+      display: none;
+    }
+
+    .movie-details img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    .movie-details h3 {
+      margin-top: 10px;
+      font-size: 1.5em;
+      color: #333;
+    }
+
+    .movie-details p {
+      margin: 10px 0;
+    }
+
+    .genres {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .genre {
+      padding: 10px 15px;
+      background-color: #18bc9c;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .genre:hover {
+      background-color: #2ecc71;
+    }
+
+    .footer {
+      background-color: #222;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .footer a {
+      color: #18bc9c;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">Movie Pedia</div>
+    <nav class="nav">
+      <a href="#">English</a>
+      <a href="#">Telugu</a>
+      <a href="#">Tamil</a>
+      <a href="#">Malayalam</a>
+      <a href="#">Hindi</a>
+      <a href="#">Kannada</a>
+    </nav>
+  </div>
+
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search for movies..." />
+    <button onclick="searchMovies()">Search</button>
+  </div>
+
+  <div class="main-content">
+    <div id="moviePoster" class="movie-poster">
+      <!-- Wall posters for some popular movies -->
+    </div>
+
+    <div id="movieDetails" class="movie-details">
+      <!-- Detailed info about a selected movie -->
+    </div>
+
+    <div class="section">
+      <h2>Genre Categories</h2>
+      <div class="genres">
+        <div class="genre" onclick="filterMoviesByGenre('Action')">Action</div>
+        <div class="genre" onclick="filterMoviesByGenre('Drama')">Drama</div>
+        <div class="genre" onclick="filterMoviesByGenre('Comedy')">Comedy</div>
+        <div class="genre" onclick="filterMoviesByGenre('Thriller')">Thriller</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Upcoming Movies</h2>
+      <p>Stay tuned for the latest and upcoming movies...</p>
+      <!-- Add more content or dynamic updates for upcoming movies -->
+    </div>
+
+    <div class="section">
+      <h2>Top Rated Movies</h2>
+      <p>Check out the top-rated movies...</p>
+      <!-- Add more content or dynamic updates for top-rated movies -->
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2024 Movie Pedia. All rights reserved.</p>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Contact Us</a>
+  </div>
+
+  <script>
+    const movies = [
+      {
+        title: "Bahubali",
+        poster: "./images/bahubali1.jpeg",
+        plot: "In ancient India, an adventurous and daring man becomes involved in a decades-old feud between two warring people.",
+        releaseDate: "2015",
+        rating: "8.1",
+        genre: "Action"
+      },
+      {
+        title: "Dangal",
+        poster: "./images/dangal.jpeg",
+        plot: "Former wrestler Mahavir Singh Phogat trains his daughters to become world-class wrestlers.",
+        releaseDate: "2016",
+        rating: "8.4",
+        genre: "Drama"
+      },
+      {
+        title: "Kabali",
+        poster: "./images/kabali.jpeg",
+        plot: "An aged gangster seeks to reform his people in Malaysia.",
+        releaseDate: "2016",
+        rating: "6.2",
+        genre: "Action"
+      },
+      {
+        title: "KGF",
+        poster: "./images/kgf.jpeg",
+        plot: "A young man's rise from poverty to power in the Kolar Gold Fields.",
+        releaseDate: "2018",
+        rating: "8.2",
+        genre: "Action"
+      },
+      {
+        title: "Piku",
+        poster: "./images/piku.jpeg",
+        plot: "A quirky comedy about the relationship between a father and his strong-willed daughter.",
+        releaseDate: "2015",
+        rating: "7.6",
+        genre: "Comedy"
+      },
+      {
+        title: "Baahubali 2",
+        poster: "./images/bahubali 2.jpeg",
+        plot: "When Shiva, the son of Bahubali, learns about his heritage, he begins to look for answers.",
+        releaseDate: "2017",
+        rating: "8.2",
+        genre: "Action"
+      },
+      {
+        title: "Sye Raa Narasimha Reddy",
+        poster: "./images/sye raa narasimha reddy.jpeg",
+        plot: "A historical action epic based on the life of Indian freedom fighter Uyyalawada Narasimha Reddy.",
+        releaseDate: "2019",
+        rating: "7.4",
+        genre: "Drama"
+      },
+      {
+        title: "Jersey",
+        poster: "./images/jersey.jpeg",
+        plot: "A talented but failed cricketer decides to make a comeback in his late thirties.",
+        releaseDate: "2019",
+        rating: "8.5",
+        genre: "Drama"
+      },
+      {
+        title: "Arjun Reddy",
+        poster: "./images/arjun reddy.jpeg",
+        plot: "A short-tempered surgeon goes into self-destruction mode after his girlfriend is forced to marry another man.",
+        releaseDate: "2017",
+        rating: "8.1",
+        genre: "Drama"
+      },
+      {
+        title: "Dhruva",
+        poster: "./images/dhruva.jpeg",
+        plot: "An IPS officer sets out to expose a criminal mastermind.",
+        releaseDate: "2016",
+        rating: "8.1",
+        genre: "Thriller"
+      }
+    ];
+
+    function searchMovies() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const filteredMovies = movies.filter(movie => movie.title.toLowerCase().includes(searchTerm));
+      if (filteredMovies.length > 0) {
+        showMovieDetails(filteredMovies[0].title);
+      } else {
+        alert("No movie found!");
+      }
+    }
+
+    function displayMovies(moviesToDisplay) {
+      const moviePoster = document.getElementById('moviePoster');
+      moviePoster.innerHTML = moviesToDisplay.map(movie => `
+        <div class="movie" onclick="showMovieDetails('${movie.title}')">
+          <img src="${movie.poster}" alt="${movie.title}">
+          <div class="movie-info">
+            <h3>${movie.title}</h3>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function showMovieDetails(title) {
+      const movie = movies.find(movie => movie.title === title);
+      const movieDetails = document.getElementById('movieDetails');
+      if (movie) {
+        movieDetails.innerHTML = `
+          <img src="${movie.poster}" alt="${movie.title}">
+          <h3>${movie.title}</h3>
+          <p><strong>Plot:</strong> ${movie.plot}</p>
+          <p><strong>Release Date:</strong> ${movie.releaseDate}</p>
+          <p><strong>Rating:</strong> ${movie.rating}</p>
+          <p><strong>Genre:</strong> ${movie.genre}</p>
+        `;
+        movieDetails.style.display = 'block';
+        window.scrollTo({ top: movieDetails.offsetTop, behavior: 'smooth' });
+      } else {
+        movieDetails.style.display = 'none';
+      }
+    }
+
+    function filterMoviesByGenre(genre) {
+      const filteredMovies = movies.filter(movie => movie.genre === genre);
+      displayMovies(filteredMovies);
+    }
+
+    // Initial display of all movies
+    displayMovies(movies);
+  </script>
+</body>
+</html>
